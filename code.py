@@ -32,7 +32,7 @@ def getNotice(nowDate):
             # print('intro is====' + item['intro'])
                 title = item['title']
                 intro = item['intro']
-                matchStr = re.search('邬惊雷', intro)
+                matchStr = re.search(r"上海市第\d+场疫情防控工作新闻发布会", intro)
             # result = matchStr.search(intro)
             # print( matchStr)
                 if matchStr is not None:
@@ -47,12 +47,17 @@ def getNotice(nowDate):
                     print("advance notice get!")
                     result = False
                     todayReportCheck = True
+                    fileName = str(datetime.date.today()) + 'result.txt'
+                    f = open(fileName, 'w')
+                    f.write(title + '\n' + intro)
+                    f.close()
                     print("RECORD_CHECK!!!")
                     print('TODAY_END!!!')
                 else:
                     result = True
             if result == True:
-                print("NOT_FOND")
+                currentTime =  datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                print("CURRENT TIME IS: " + currentTime + " RESULT:NOT_FOND")
             return result
         else:
             return True
